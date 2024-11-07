@@ -1,6 +1,4 @@
 import streamlit as st
+import random
 
-st.title("Hello world")
-
-st.write("This is my first web app. And it is not working, why")
-st.button ("click me")
+st.set_page_config(page_title="Animal Guessing Game", page_icon=":paw_prints:")
