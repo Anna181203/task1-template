@@ -59,4 +59,11 @@ def check_input(guess_animal, target_animal):
         if guess_animal == target_animal:
             st.write("Wow! You found the right animal! Congrats!")
         else:
-            feedback(guess_animal, target_animal)
+            feedback_score(guess_animal, target_animal)
+
+def show_animal(animal_name):
+    try:
+        image_path = f"images/{animal_name}.jpg"
+        st.image(image_path, caption=animal_name, use_column_width=True)
+    except:
+        st.warning(f"Didn't find the image for '{animal_name}'")
