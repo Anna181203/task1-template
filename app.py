@@ -70,5 +70,18 @@ def check_input(guess_animal, target_animal):
         else:
             feedback_score(guess_animal, target_animal)
 
+#Pick a random animal
+animal, animal_features = random.choice(list(animals.items()))
 
+#Create attempts counter for stats
+attempts = 0
 
+#Initialize session state
+if animal not in st.session_state:
+    st.session_state.animal = animal
+    st.session_state.animal_features = animal_features
+    st.session_state.attempts = attempts
+    st.session_state.game_over = False
+
+#Ask for a guess
+guess = st.text_input("What is your guess:", "")
