@@ -59,17 +59,6 @@ def show_animal(animal_name):
     except:
         st.warning(f"Didn't find the image for '{animal_name}'")
 
-#Function to see if the input is valid and correct
-def check_input(guess_animal, target_animal):
-    if guess_animal not in animals:
-        st.write("This animal is not available to be guessed...")
-    else:
-        if guess_animal == target_animal:
-            st.write("Wow! You found the right animal! Congrats!")
-            show_animal(target_animal)
-        else:
-            give_feedback(guess_animal, target_animal)
-
 #Function to give qualitative feedback based on feedback score
 def give_feedback(guess_animal, target_animal):
     score = feedback_score(guess_animal, target_animal)
@@ -86,6 +75,19 @@ def give_feedback(guess_animal, target_animal):
     elif score == 1:
         st.write("Wow the animal you guessed is almost the same animal!😻")
 
+#Function to see if the input is valid and correct
+def check_input(guess_animal, target_animal):
+    if guess_animal not in animals:
+        st.write("This animal is not available to be guessed...")
+    else:
+        if guess_animal == target_animal:
+            st.write("Wow! You found the right animal! Congrats!")
+            show_animal(target_animal)
+        else:
+            give_feedback(guess_animal, target_animal)
+
+
+#HERE THE ACTUAL GAME STARTS
 #Create attempts counter for stats
 attempts = 0
 
@@ -95,15 +97,21 @@ if 'animal' not in st.session_state:
     st.session_state.animal = animal
     st.session_state.animal_features = animal_features
     st.session_state.attempts = attempts
-    st.session_state.game_over = False
 
 #Just for testing
-#st.write(st.session_state.animal)
+st.write(st.session_state.animal)
 
 #Ask for a guess
 guess = st.text_input("What is your guess:", "")
 
 #Create Guess Button and check the Input
-if st.button("Guess") and not st.session_state.game_over:
+if guess or st.button("Guess"):
     st.session_state.attempts += 1
     check_input(guess, st.session_state.animal)
+
+#Start new game
+if st.button("Start new game"):
+    animal, animal_features = random.choice(list(animals.items()))
+    st.session_state.animal = animal
+    st.session_state.animal_features = animal_features
+    st.session_state.attempts = 0
