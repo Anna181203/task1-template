@@ -34,9 +34,8 @@ animals = {
     "Whale": {"Habitat":"Ocean", "Size":"XL", "Food":"Carnivore", "Movement":"Swimming", "Color":"Grey", "Reproduction:":"Mammal"}
 }
 
-#An dieser Funktion weiterarbeiten!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #Function for qualitative feedback
-def feedback(guess_animal, target_animal):
+def feedback_score(guess_animal, target_animal):
     score = 0
 
 #Defining variables to calculate quality of guess
@@ -44,12 +43,13 @@ def feedback(guess_animal, target_animal):
     target_features = animals[target_animal]
     total_features = len(target_features)
 
-#Check the amount of similarities to
+#Calculate the amount of same features
     for feature in target_features:
         if guess_features[feature] == target_features[feature]:
             score += 1
 
-    return score / total_features  # Verhältnis der passenden Merkmale
+#Return the similarity value
+    return score/total_features
 
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
