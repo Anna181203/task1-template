@@ -9,8 +9,7 @@ st.write("""
     Welcome to the Animal Guessing Game!\n
     Please guess the animal I am thinking about. The options are:\n
     fly, spider, mouse, rat, bird, rabbit, monkey, cat, racoon,\n
-    fox, pig, panda, dog, wolf, lion, horse, giraffe, elephant, whale
-    🐾""")
+    fox, pig, panda, dog, wolf, lion, horse, giraffe, elephant, whale🐾""")
 
 #List of all possible Animals
 animals = {
@@ -34,3 +33,30 @@ animals = {
     "Elephant": {"Habitat":"Africa", "Size":"XL", "Food":"Herbivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
     "Whale": {"Habitat":"Ocean", "Size":"XL", "Food":"Carnivore", "Movement":"Swimming", "Color":"Grey", "Reproduction:":"Mammal"}
 }
+
+#An dieser Funktion weiterarbeiten!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#Function for qualitative feedback
+def feedback(guess_animal, target_animal):
+    score = 0
+
+#Defining variables to calculate quality of guess
+    guess_features = animals[guess_animal]
+    target_features = animals[target_animal]
+    total_features = len(target_features)
+
+#Check the amount of similarities to
+    for feature in target_features:
+        if guess_features[feature] == target_features[feature]:
+            score += 1
+
+    return score / total_features  # Verhältnis der passenden Merkmale
+
+#Function to see if the input is valid and correct
+def check_input(guess_animal, target_animal):
+    if guess_animal not in animals:
+        st.write("This animal is not available to be guessed...")
+    else:
+        if guess_animal == target_animal:
+            st.write("Wow! You found the right animal! Congrats!")
+        else:
+            feedback(guess_animal, target_animal)
