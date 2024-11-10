@@ -68,7 +68,23 @@ def check_input(guess_animal, target_animal):
             st.write("Wow! You found the right animal! Congrats!")
             show_animal(target_animal)
         else:
-            feedback_score(guess_animal, target_animal)
+            give_feedback(guess_animal, target_animal)
+
+#Function to give qualitative feedback based on feedback score
+def give_feedback(guess_animal, target_animal):
+    score = feedback_score(guess_animal, target_animal)
+    if score == 0:
+        st.write("I'm sorry. The animal you are looking has almost no similarities to your guess...😥")
+    elif score <= 0.2:
+        st.write("You are getting there. But there is still a looong way to go... Good luck!!🧸")
+    elif score <= 0.4:
+        st.write("Well... The animal you are looking for has a few similarities to your guessed animal😅")
+    elif score <= 0.6:
+        st.write("Not quite the animal you are looking for but you are guessing in the right direction. The animals are quite similar😺")
+    elif score <= 0.8:
+        st.write("The animal you guessed is very similar to the animal you are looking for😍")
+    elif score == 1:
+        st.write("Wow the animal you guessed is almost the same animal!😻")
 
 #Create attempts counter for stats
 attempts = 0
@@ -81,8 +97,8 @@ if 'animal' not in st.session_state:
     st.session_state.attempts = attempts
     st.session_state.game_over = False
 
-#Just for testing                                           Delete when finished
-st.write(st.session_state.animal)
+#Just for testing
+#st.write(st.session_state.animal)
 
 #Ask for a guess
 guess = st.text_input("What is your guess:", "")
