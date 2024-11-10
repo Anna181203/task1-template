@@ -51,6 +51,14 @@ def feedback_score(guess_animal, target_animal):
 #Return the similarity value
     return score/total_features
 
+#Function to show animal picture
+def show_animal(animal_name):
+    try:
+        image_path = f"images/{animal_name}.jpg"
+        st.image(image_path, caption=animal_name, use_container_width=True)
+    except:
+        st.warning(f"Didn't find the image for '{animal_name}'")
+
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
     if guess_animal not in animals:
@@ -58,12 +66,9 @@ def check_input(guess_animal, target_animal):
     else:
         if guess_animal == target_animal:
             st.write("Wow! You found the right animal! Congrats!")
+            show_animal(target_animal)
         else:
             feedback_score(guess_animal, target_animal)
 
-def show_animal(animal_name):
-    try:
-        image_path = f"images/{animal_name}.jpg"
-        st.image(image_path, caption=animal_name, use_column_width=True)
-    except:
-        st.warning(f"Didn't find the image for '{animal_name}'")
+
+
