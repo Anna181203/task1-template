@@ -4,12 +4,11 @@ import random
 #Page name and icon
 st.set_page_config(page_title="Animal Guessing Game", page_icon=":paw_prints:")
 
+st.title("🐾Welcome to the Animal Guessing Game!🐾")
 #Introduction to the game
 st.write("""
-    Welcome to the Animal Guessing Game!\n
     Please guess the animal I am thinking about. The options are:\n
-    Fly, Spider, Mouse, Rat, Bird, Rabbit, Monkey, Cat, Racoon,\n
-    Fox, Pig, Panda, Dog, Wolf, Lion, Horse, Giraffe, Elephant, Whale🐾""")
+    Fly, Spider, Mouse, Rat, Bird, Rabbit, Monkey, Cat, Racoon, Fox, Pig, Panda, Dog, Wolf, Lion, Horse, Giraffe, Elephant, Whale🐾""")
 
 #List of all possible Animals
 animals = {
@@ -84,6 +83,10 @@ def check_input(guess_animal, target_animal):
         feedback = "Wow! You found the right animal! Congrats!"
         st.write(feedback)
         show_animal(target_animal)
+        st.session_state.games_played += 1
+        st.session_state.total_guesses += st.session_state.guess_count
+        st.session_state.guesses_per_game.append(st.session_state.guess_count)
+        st.session_state.game = True
     else:
         feedback = give_feedback(guess_animal, target_animal)
         st.write(feedback)
@@ -101,6 +104,8 @@ if 'animal' not in st.session_state:
     st.session_state.guess_count = 0
     st.session_state.games_played = 0
     st.session_state.total_guesses = 0
+    st.session_state.guesses_per_game = []
+    st.session_state.game = False
 
 #Ask for a guess
 guess = st.text_input("What is your guess:", "")
@@ -110,15 +115,11 @@ if st.button("Guess"):
     st.session_state.guess_count += 1
     check_input(guess, st.session_state.animal)
 
-if st.button("Start new game"):
+if st.button("Start new game") or st.session_state.game:
     animal, animal_features = random.choice(list(animals.items()))
     st.session_state.animal = animal
     st.session_state.animal_features = animal_features
-    st.session_state.games_played += 1
-    st.session_state.total_guesses += st.session_state.guess_count
+    st. session_state.guess_count = 0
+    st.session_state.game = False
 
 st.write(st.session_state.animal)
-
-st.subheader("Chat History")
-for guess, feedback in st.session_state.guess_history:
-    st.write(f"**You guessed**: {guess} - **Feedback**: {feedback}")
