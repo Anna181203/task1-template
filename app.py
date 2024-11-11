@@ -8,8 +8,8 @@ st.set_page_config(page_title="Animal Guessing Game", page_icon=":paw_prints:")
 st.write("""
     Welcome to the Animal Guessing Game!\n
     Please guess the animal I am thinking about. The options are:\n
-    fly, spider, mouse, rat, bird, rabbit, monkey, cat, racoon,\n
-    fox, pig, panda, dog, wolf, lion, horse, giraffe, elephant, whale🐾""")
+    Fly, Spider, Mouse, Rat, Bird, Rabbit, Monkey, Cat, Racoon,\n
+    Fox, Pig, Panda, Dog, Wolf, Lion, Horse, Giraffe, Elephant, Whale🐾""")
 
 #List of all possible Animals
 animals = {
@@ -63,55 +63,62 @@ def show_animal(animal_name):
 def give_feedback(guess_animal, target_animal):
     score = feedback_score(guess_animal, target_animal)
     if score == 0:
-        st.write("I'm sorry. The animal you are looking has almost no similarities to your guess...😥")
+        return st.write("I'm sorry. The animal you are looking has almost no similarities to your guess...😥")
     elif score <= 0.2:
-        st.write("You are getting there. But there is still a looong way to go... Good luck!!🧸")
+        return st.write("You are getting there. But there is still a looong way to go... Good luck!!🧸")
     elif score <= 0.4:
-        st.write("Well... The animal you are looking for has a few similarities to your guessed animal😅")
+        return st.write("Well... The animal you are looking for has a few similarities to your guessed animal😅")
     elif score <= 0.6:
-        st.write("Not quite the animal you are looking for but you are guessing in the right direction. The animals are quite similar😺")
+        return st.write("Not quite the animal you are looking for but you are guessing in the right direction. The animals are quite similar😺")
     elif score <= 0.8:
-        st.write("The animal you guessed is very similar to the animal you are looking for😍")
+        return st.write("The animal you guessed is very similar to the animal you are looking for😍")
     elif score == 1:
-        st.write("Wow the animal you guessed is almost the same animal!😻")
+        return st.write("Wow the animal you guessed is almost the same animal!😻")
 
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
     if guess_animal not in animals:
-        st.write("This animal is not available to be guessed...")
+        feedback = "This animal is not available to be guessed..."
+        st.write(feedback)
+    elif guess_animal == target_animal:
+        feedback = "Wow! You found the right animal! Congrats!"
+        st.write(feedback)
+        show_animal(target_animal)
     else:
-        if guess_animal == target_animal:
-            st.write("Wow! You found the right animal! Congrats!")
-            show_animal(target_animal)
-        else:
-            give_feedback(guess_animal, target_animal)
+        feedback = give_feedback(guess_animal, target_animal)
+        st.write(feedback)
+    st.session_state.guess_history.append((guess_animal, feedback))
 
 
 #HERE THE ACTUAL GAME STARTS
-#Create attempts counter for stats
-attempts = 0
 
 #Initialize session state
 if 'animal' not in st.session_state:
     animal, animal_features = random.choice(list(animals.items()))
     st.session_state.animal = animal
     st.session_state.animal_features = animal_features
-    st.session_state.attempts = attempts
-
-#Just for testing
-st.write(st.session_state.animal)
+    st.session_state.guess_history = []
+    st.session_state.guess_count = 0
+    st.session_state.games_played = 0
+    st.session_state.total_guesses = 0
 
 #Ask for a guess
 guess = st.text_input("What is your guess:", "")
 
 #Create Guess Button and check the Input
-if guess or st.button("Guess"):
-    st.session_state.attempts += 1
+if st.button("Guess"):
+    st.session_state.guess_count += 1
     check_input(guess, st.session_state.animal)
 
-#Start new game
 if st.button("Start new game"):
     animal, animal_features = random.choice(list(animals.items()))
     st.session_state.animal = animal
     st.session_state.animal_features = animal_features
-    st.session_state.attempts = 0
+    st.session_state.games_played += 1
+    st.session_state.total_guesses += st.session_state.guess_count
+
+st.write(st.session_state.animal)
+
+st.subheader("Chat History")
+for guess, feedback in st.session_state.guess_history:
+    st.write(f"**You guessed**: {guess} - **Feedback**: {feedback}")
