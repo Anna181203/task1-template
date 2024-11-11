@@ -63,17 +63,17 @@ def show_animal(animal_name):
 def give_feedback(guess_animal, target_animal):
     score = feedback_score(guess_animal, target_animal)
     if score == 0:
-        return st.write("I'm sorry. The animal you are looking has almost no similarities to your guess...😥")
+        return "I'm sorry. The animal you are looking has almost no similarities to your guess...😥"
     elif score <= 0.2:
-        return st.write("You are getting there. But there is still a looong way to go... Good luck!!🧸")
+        return "You are getting there. But there is still a looong way to go... Good luck!!🧸"
     elif score <= 0.4:
-        return st.write("Well... The animal you are looking for has a few similarities to your guessed animal😅")
+        return "Well... The animal you are looking for has a few similarities to your guessed animal😅"
     elif score <= 0.6:
-        return st.write("Not quite the animal you are looking for but you are guessing in the right direction. The animals are quite similar😺")
+        return "Not quite the animal you are looking for but you are guessing in the right direction. The animals are quite similar😺"
     elif score <= 0.8:
-        return st.write("The animal you guessed is very similar to the animal you are looking for😍")
+        return "The animal you guessed is very similar to the animal you are looking for😍"
     elif score == 1:
-        return st.write("Wow the animal you guessed is almost the same animal!😻")
+        return "Wow the animal you guessed is almost the same animal!😻"
 
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
