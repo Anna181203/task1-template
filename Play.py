@@ -76,7 +76,7 @@ def give_feedback(guess_animal, target_animal):
 
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
-    if guess_animal not in animals:
+    if guess_animal not in animals or guess_animal not in [animal.lower() for animal in animals]:
         feedback = "This animal is not available to be guessed..."
         st.write(feedback)
     elif guess_animal == target_animal:
