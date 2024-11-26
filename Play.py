@@ -1,5 +1,6 @@
-import streamlit as st
+
 import random
+import streamlit as st
 
 #Page name and icon
 st.set_page_config(page_title="Animal Guessing Game", page_icon=":paw_prints:")
@@ -12,25 +13,25 @@ st.write("""
 
 #List of all possible Animals
 animals = {
-    "Fly": {"Habitat":"Everywhere", "Size":"XS", "Food":"Omnivore", "Movement":"Flying", "Color":"Black", "Reproduction:":"Oviparous"},
-    "Spider": {"Habitat":"Everywhere", "Size":"XS", "Food":"Carnivore", "Movement":"Walking", "Color":"Black", "Reproduction:":"Oviparous"},
-    "Mouse": {"Habitat":"Everywhere", "Size":"XS", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
-    "Rat": {"Habitat":"Everywhere", "Size":"S", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
-    "Bird": {"Habitat":"Everywhere", "Size":"S", "Food":"Omnivore", "Movement":"Flying", "Color":"Colorful", "Reproduction:":"Oviparous"},
-    "Rabbit": {"Habitat":"Everywhere", "Size":"S", "Food":"Herbivore", "Movement":"Hopping", "Color":"Brown", "Reproduction:":"Mammal"},
-    "Monkey": {"Habitat":"Africa", "Size":"M", "Food":"Omnivore", "Movement":"Climbing", "Color":"Brown", "Reproduction:":"Mammal"},
-    "Cat": {"Habitat":"Everywhere", "Size":"M", "Food":"Carnivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
-    "Racoon": {"Habitat":"America", "Size":"M", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
-    "Fox": {"Habitat":"Everywhere", "Size":"M", "Food":"Omnivore", "Movement":"Walking", "Color":"Red", "Reproduction:":"Mammal"},
-    "Pig": {"Habitat":"Everywhere", "Size":"L", "Food":"Omnivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
-    "Panda": {"Habitat":"Asia", "Size":"L", "Food":"Herbivore", "Movement":"Climbing", "Color":"White", "Reproduction:":"Mammal"},
-    "Dog": {"Habitat":"Everywhere", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
-    "Wolf": {"Habitat":"Europe", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
-    "Lion": {"Habitat":"Africa", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
-    "Horse": {"Habitat":"America", "Size":"L", "Food":"Herbivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
-    "Giraffe": {"Habitat":"Africa", "Size":"XL", "Food":"Herbivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
-    "Elephant": {"Habitat":"Africa", "Size":"XL", "Food":"Herbivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
-    "Whale": {"Habitat":"Ocean", "Size":"XL", "Food":"Carnivore", "Movement":"Swimming", "Color":"Grey", "Reproduction:":"Mammal"}
+    "fly": {"Habitat":"Everywhere", "Size":"XS", "Food":"Omnivore", "Movement":"Flying", "Color":"Black", "Reproduction:":"Oviparous"},
+    "spider": {"Habitat":"Everywhere", "Size":"XS", "Food":"Carnivore", "Movement":"Walking", "Color":"Black", "Reproduction:":"Oviparous"},
+    "mouse": {"Habitat":"Everywhere", "Size":"XS", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
+    "rat": {"Habitat":"Everywhere", "Size":"S", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
+    "bird": {"Habitat":"Everywhere", "Size":"S", "Food":"Omnivore", "Movement":"Flying", "Color":"Colorful", "Reproduction:":"Oviparous"},
+    "rabbit": {"Habitat":"Everywhere", "Size":"S", "Food":"Herbivore", "Movement":"Hopping", "Color":"Brown", "Reproduction:":"Mammal"},
+    "monkey": {"Habitat":"Africa", "Size":"M", "Food":"Omnivore", "Movement":"Climbing", "Color":"Brown", "Reproduction:":"Mammal"},
+    "cat": {"Habitat":"Everywhere", "Size":"M", "Food":"Carnivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
+    "racoon": {"Habitat":"America", "Size":"M", "Food":"Omnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
+    "fox": {"Habitat":"Everywhere", "Size":"M", "Food":"Omnivore", "Movement":"Walking", "Color":"Red", "Reproduction:":"Mammal"},
+    "pig": {"Habitat":"Everywhere", "Size":"L", "Food":"Omnivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
+    "panda": {"Habitat":"Asia", "Size":"L", "Food":"Herbivore", "Movement":"Climbing", "Color":"White", "Reproduction:":"Mammal"},
+    "dog": {"Habitat":"Everywhere", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
+    "wolf": {"Habitat":"Europe", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
+    "lion": {"Habitat":"Africa", "Size":"L", "Food":"Carnivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
+    "horse": {"Habitat":"America", "Size":"L", "Food":"Herbivore", "Movement":"Walking", "Color":"Multi", "Reproduction:":"Mammal"},
+    "giraffe": {"Habitat":"Africa", "Size":"XL", "Food":"Herbivore", "Movement":"Walking", "Color":"Brown", "Reproduction:":"Mammal"},
+    "elephant": {"Habitat":"Africa", "Size":"XL", "Food":"Herbivore", "Movement":"Walking", "Color":"Grey", "Reproduction:":"Mammal"},
+    "whale": {"Habitat":"Ocean", "Size":"XL", "Food":"Carnivore", "Movement":"Swimming", "Color":"Grey", "Reproduction:":"Mammal"}
 }
 
 #Function for qualitative feedback
@@ -76,7 +77,7 @@ def give_feedback(guess_animal, target_animal):
 
 #Function to see if the input is valid and correct
 def check_input(guess_animal, target_animal):
-    if guess_animal not in animals or guess_animal not in [animal.lower() for animal in animals]:
+    if guess_animal not in animals: #or guess_animal not in [animal.lower() for animal in animals]:
         feedback = "This animal is not available to be guessed..."
         st.write(feedback)
     elif guess_animal == target_animal:
@@ -109,6 +110,7 @@ if 'animal' not in st.session_state:
 
 #Ask for a guess
 guess = st.text_input("What is your guess:", "")
+guess = guess.lower()
 
 #Create Guess Button and check the Input
 if st.button("Guess"):
@@ -123,3 +125,5 @@ if st.button("Start new game") or st.session_state.game:
     st.session_state.game = False
 
 st.write(st.session_state.animal)
+
+
